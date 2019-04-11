@@ -23,10 +23,10 @@ class TopNavigationStackView: UIStackView {
         messageButton.setImage(#imageLiteral(resourceName: "top_right_messages").withRenderingMode(.alwaysOriginal), for: .normal)
         fireImageView.contentMode = .scaleAspectFit
         
-        [settingsButton, UIView(), fireImageView, UIView(), messageButton].forEach{addArrangedSubview($0)}
+        [settingsButton, fireImageView, messageButton].forEach{addArrangedSubview($0)}
         
         isLayoutMarginsRelativeArrangement = true
-        layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        layoutMargins = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
         
         heightAnchor.constraint(equalToConstant: 80).isActive = true
     }
