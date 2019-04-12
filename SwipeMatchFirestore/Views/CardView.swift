@@ -18,26 +18,41 @@ class CardView: UIView {
         }
     }
     
-    let imageView: UIImageView = {
+    fileprivate let imageView: UIImageView = {
         let imageV = UIImageView()
         imageV.contentMode = .scaleAspectFill
         return imageV
     }()
     
-    let informationLabel: UILabel = {
+    fileprivate let informationLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .white
         return label
     }()
     
+    fileprivate let gradientLayer = CAGradientLayer()
+    
     //Configuration
-    let threshold: CGFloat = 100
+    fileprivate let threshold: CGFloat = 100
 
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        setupLayout()
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handleGesture))
+        addGestureRecognizer(panGesture)
+    }
+    
+    override func layoutSubviews() {
+        gradientLayer.frame = frame
+    }
+    
+    fileprivate func setupLayout() {
         addSubview(imageView)
+        setupGradientLayer()
         addSubview(informationLabel)
         
         imageView.fillSuperview()
@@ -45,13 +60,18 @@ class CardView: UIView {
         
         layer.cornerRadius = 10
         clipsToBounds = true
-        
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handleGesture))
-        addGestureRecognizer(panGesture)
+    }
+    
+    fileprivate func setupGradientLayer(){
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+        gradientLayer.locations = [0.5, 1.1]
+        layer.addSublayer(gradientLayer)
     }
     
     @objc func handleGesture(gesture: UIPanGestureRecognizer) {
         switch gesture.state {
+        case .began:
+            superview?.subviews.forEach{$0.layer.removeAllAnimations()}
         case .changed:
             handleChanged(gesture)
         case .ended:
