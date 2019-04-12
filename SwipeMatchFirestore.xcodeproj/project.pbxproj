@@ -17,6 +17,7 @@
 		CD1B838A225F7E4600747E50 /* HomeBottomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1B8389225F7E4600747E50 /* HomeBottomStackView.swift */; };
 		CD1B838C225F87F700747E50 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1B838B225F87F700747E50 /* CardView.swift */; };
 		CDCB9D3D2260D4EB00F61BC7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCB9D3C2260D4EB00F61BC7 /* User.swift */; };
+		CDCB9D412260E8E900F61BC7 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCB9D402260E8E900F61BC7 /* CardViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		CD1B8389225F7E4600747E50 /* HomeBottomStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomStackView.swift; sourceTree = "<group>"; };
 		CD1B838B225F87F700747E50 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		CDCB9D3C2260D4EB00F61BC7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		CDCB9D402260E8E900F61BC7 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,11 +66,12 @@
 		CD1B8370225F7BB300747E50 /* SwipeMatchFirestore */ = {
 			isa = PBXGroup;
 			children = (
-				CD1B8384225F7BD900747E50 /* Extension */,
-				CDCB9D3B2260D4DA00F61BC7 /* Model */,
+				CD1B8384225F7BD900747E50 /* Extensions */,
+				CDCB9D3B2260D4DA00F61BC7 /* Models */,
 				CD1B8383225F7BC300747E50 /* Views */,
+				CDCB9D3F2260E8CC00F61BC7 /* ViewModels */,
+				CDCB9D3E2260E86500F61BC7 /* Controllers */,
 				CD1B8371225F7BB300747E50 /* AppDelegate.swift */,
-				CD1B8373225F7BB300747E50 /* HomeController.swift */,
 				CD1B8375225F7BB300747E50 /* Main.storyboard */,
 				CD1B8378225F7BB400747E50 /* Assets.xcassets */,
 				CD1B837A225F7BB400747E50 /* LaunchScreen.storyboard */,
@@ -87,20 +90,36 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		CD1B8384225F7BD900747E50 /* Extension */ = {
+		CD1B8384225F7BD900747E50 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				CD1B8385225F7C0800747E50 /* UIView+Additions.swift */,
 			);
-			path = Extension;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
-		CDCB9D3B2260D4DA00F61BC7 /* Model */ = {
+		CDCB9D3B2260D4DA00F61BC7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				CDCB9D3C2260D4EB00F61BC7 /* User.swift */,
 			);
-			path = Model;
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CDCB9D3E2260E86500F61BC7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CD1B8373225F7BB300747E50 /* HomeController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CDCB9D3F2260E8CC00F61BC7 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				CDCB9D402260E8E900F61BC7 /* CardViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -178,6 +197,7 @@
 				CD1B8374225F7BB300747E50 /* HomeController.swift in Sources */,
 				CD1B8372225F7BB300747E50 /* AppDelegate.swift in Sources */,
 				CD1B8386225F7C0800747E50 /* UIView+Additions.swift in Sources */,
+				CDCB9D412260E8E900F61BC7 /* CardViewModel.swift in Sources */,
 				CD1B838C225F87F700747E50 /* CardView.swift in Sources */,
 				CD1B8388225F7C9200747E50 /* TopNavigationStackView.swift in Sources */,
 				CDCB9D3D2260D4EB00F61BC7 /* User.swift in Sources */,

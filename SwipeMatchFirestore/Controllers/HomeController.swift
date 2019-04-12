@@ -18,6 +18,8 @@ class HomeController: UIViewController {
         User(name: "Kelly", age: 23, profession: "Music DJ", imageURL: "lady5c"),
         User(name: "Jane", age: 18, profession: "Teacher", imageURL: "lady4c")
     ]
+    
+    var cardViewModels = [CardViewModel]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,9 +43,10 @@ class HomeController: UIViewController {
     }
     
     fileprivate func setupCardView() {
-        users.forEach { (user) in
+        cardViewModels = users.map{CardViewModel(user: $0)}
+        cardViewModels.forEach { (cardViewModel) in
             let cardView = CardView()
-            cardView.user = user
+            cardView.cardViewModel = cardViewModel
             cardsDeckView.addSubview(cardView)
             cardView.fillSuperview()
         }

@@ -10,14 +10,11 @@ import UIKit
 
 class CardView: UIView {
     
-    var user: User? {
+    var cardViewModel: CardViewModel? {
         didSet{
-            guard let user = user else { return }
-            imageView.image = UIImage(named: user.imageURL)
-            let attributedText = NSMutableAttributedString(string: user.name, attributes: [.font : UIFont.systemFont(ofSize: 32, weight: .heavy)])
-            attributedText.append(NSAttributedString(string: " \(user.age)", attributes: [.font : UIFont.systemFont(ofSize: 24, weight: .regular)]))
-            attributedText.append(NSAttributedString(string: "\n\(user.profession)", attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .regular)]))
-            informationLabel.attributedText = attributedText
+            guard let cardViewModel = cardViewModel else { return }
+            imageView.image = UIImage(named: cardViewModel.imageURL)
+            informationLabel.attributedText = cardViewModel.attributedText
         }
     }
     
