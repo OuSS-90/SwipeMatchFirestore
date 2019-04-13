@@ -10,7 +10,7 @@ import UIKit
 
 struct CardViewModel {
     let attributedText: NSAttributedString
-    let imageURL: String
+    let imagesUrl: [String]
     let textAlignment: NSTextAlignment
     
     init(user: User, textAlignment: NSTextAlignment = .left) {
@@ -18,7 +18,7 @@ struct CardViewModel {
         attributedText.append(NSAttributedString(string: " \(user.age)", attributes: [.font : UIFont.systemFont(ofSize: 24, weight: .regular)]))
         attributedText.append(NSAttributedString(string: "\n\(user.profession)", attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .regular)]))
         self.attributedText = attributedText
-        self.imageURL = user.imageURL
+        self.imagesUrl = user.imagesUrl
         self.textAlignment = textAlignment
     }
 }

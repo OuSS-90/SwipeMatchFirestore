@@ -15,8 +15,8 @@ class HomeController: UIViewController {
     let bottomStackView = HomeBottomStackView()
     
     let users = [
-        User(name: "Kelly", age: 23, profession: "Music DJ", imageURL: "lady5c"),
-        User(name: "Jane", age: 18, profession: "Teacher", imageURL: "lady4c")
+        User(name: "Kelly", age: 23, profession: "Music DJ", imagesUrl: ["kelly1" ,"kelly2", "kelly3"]),
+        User(name: "Jane", age: 18, profession: "Teacher", imagesUrl: ["jane1" ,"jane2", "jane3"])
     ]
     
     var cardViewModels = [CardViewModel]()
