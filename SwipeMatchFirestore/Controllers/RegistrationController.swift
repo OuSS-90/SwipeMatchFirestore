@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import JGProgressHUD
 
 class RegistrationController: UIViewController {
     
@@ -55,6 +57,7 @@ class RegistrationController: UIViewController {
         button.isEnabled = false
         button.heightAnchor.constraint(equalToConstant: 44).isActive = true
         button.layer.cornerRadius = 22
+        button.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         return button
     }()
     
@@ -94,6 +97,11 @@ class RegistrationController: UIViewController {
         setupNotificationObservers()
         setupTapGesture()
         setupIsFormValidObserver()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self) // you'll have a retain cycle
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -164,14 +172,30 @@ class RegistrationController: UIViewController {
         }
     }
     
+    @objc fileprivate func handleRegister() {
+        guard let email = emailTextField.text else { return }
+        guard let password = passwordTextField.text else { return }
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+            self.handleTapDismiss()
+            if let err = error {
+                self.showHUDWithError(error: err)
+                return
+            }
+        }
+    }
+    
+    fileprivate func showHUDWithError(error: Error){
+        let hud = JGProgressHUD.init(style: .dark)
+        hud.textLabel.text = "Failed registration"
+        hud.detailTextLabel.text = error.localizedDescription
+        hud.show(in: view)
+        hud.dismiss(afterDelay: 4)
+    }
+    
     fileprivate func setupNotificationObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self) // you'll have a retain cycle
     }
     
     @objc fileprivate func handleKeyboardHide() {
