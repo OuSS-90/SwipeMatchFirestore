@@ -91,6 +91,7 @@ class RegistrationController: UIViewController {
     let registrationViewModel = RegistrationViewModel()
     var selectPhotoHeight: NSLayoutConstraint?
     var selectPhotoWidth: NSLayoutConstraint?
+    let registeringHUD = JGProgressHUD(style: .dark)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -184,17 +185,23 @@ class RegistrationController: UIViewController {
             self.registerButton.isEnabled = isFormValid
             self.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1) : .lightGray
         }
+        registrationViewModel.bindableIsRegistering.bind { [unowned self] (isRegistering) in
+            if isRegistering == true {
+                self.registeringHUD.textLabel.text = "Register"
+                self.registeringHUD.show(in: self.view)
+            } else {
+                self.registeringHUD.dismiss()
+            }
+        }
     }
     
     @objc fileprivate func handleRegister() {
-        guard let email = emailTextField.text else { return }
-        guard let password = passwordTextField.text else { return }
-        
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-            self.handleTapDismiss()
-            if let err = error {
-                self.showHUDWithError(error: err)
-                return
+        registrationViewModel.performRegistration { (result) in
+            switch result {
+            case .success(_):
+                print("success")
+            case .failure(let error):
+                self.showHUDWithError(error: error)
             }
         }
     }
