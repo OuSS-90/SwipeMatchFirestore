@@ -34,24 +34,49 @@ class RegistrationViewModel {
                 return
             }
             
-            let filename = UUID().uuidString
-            let ref = Storage.storage().reference(withPath: "/images/\(filename)")
-            guard let data = self.bindableImage.value?.jpegData(compressionQuality: 0.75) else { return }
-            ref.putData(data, metadata: nil, completion: { (_, error) in
+            self.saveImageToFirebase(completion: completion)
+        }
+    }
+    
+    fileprivate func saveImageToFirebase(completion: @escaping (Result<Bool,Error>) -> ()) {
+        let filename = UUID().uuidString
+        let ref = Storage.storage().reference(withPath: "/images/\(filename)")
+        guard let imageData = self.bindableImage.value?.jpegData(compressionQuality: 0.75) else { return }
+        ref.putData(imageData, metadata: nil, completion: { (_, error) in
+            
+            if let err = error {
+                completion(.failure(err))
+                return
+            }
+            
+            print("Finished uploading image to storage")
+            ref.downloadURL(completion: { (url, error) in
                 if let err = error {
                     completion(.failure(err))
                     return
                 }
                 
-                ref.downloadURL(completion: { (url, error) in
-                    if let err = error {
-                        completion(.failure(err))
-                        return
-                    }
-                    
-                    self.bindableIsRegistering.value = false
-                })
+                self.bindableIsRegistering.value = false
+                
+                let imageUrl = url?.absoluteString ?? ""
+                self.saveInfoToFirestore(imageUrl: imageUrl, completion: completion)
             })
+            
+        })
+    }
+    
+    fileprivate func saveInfoToFirestore(imageUrl: String, completion: @escaping (Result<Bool,Error>) -> ()) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let fullname = fullname else { return }
+        let docData = ["fullName": fullname, "uid": uid, "imageUrl1": imageUrl]
+        Firestore.firestore().collection("users").document(uid).setData(docData) { (error) in
+            if let err = error {
+                completion(.failure(err))
+                return
+            }
+            
+            completion(.success(true))
         }
     }
+    
 }
