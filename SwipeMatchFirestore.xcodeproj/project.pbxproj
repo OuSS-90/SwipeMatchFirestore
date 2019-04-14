@@ -20,6 +20,7 @@
 		CD1B838C225F87F700747E50 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1B838B225F87F700747E50 /* CardView.swift */; };
 		CDCB9D3D2260D4EB00F61BC7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCB9D3C2260D4EB00F61BC7 /* User.swift */; };
 		CDCB9D412260E8E900F61BC7 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCB9D402260E8E900F61BC7 /* CardViewModel.swift */; };
+		CDCE00B122636C95001C50BF /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCE00B022636C95001C50BF /* RegistrationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		CD1B838B225F87F700747E50 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		CDCB9D3C2260D4EB00F61BC7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CDCB9D402260E8E900F61BC7 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
+		CDCE00B022636C95001C50BF /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 			isa = PBXGroup;
 			children = (
 				CDCB9D402260E8E900F61BC7 /* CardViewModel.swift */,
+				CDCE00B022636C95001C50BF /* RegistrationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -200,6 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD1B838A225F7E4600747E50 /* HomeBottomStackView.swift in Sources */,
+				CDCE00B122636C95001C50BF /* RegistrationViewModel.swift in Sources */,
 				CD0F3242226236870066E1C7 /* RegistrationController.swift in Sources */,
 				CD1B8374225F7BB300747E50 /* HomeController.swift in Sources */,
 				CD1B8372225F7BB300747E50 /* AppDelegate.swift in Sources */,

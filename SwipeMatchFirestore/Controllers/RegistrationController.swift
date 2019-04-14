@@ -17,8 +17,6 @@ class RegistrationController: UIViewController {
         button.titleLabel?.font = UIFont.systemFont(ofSize: 32, weight: .heavy)
         button.backgroundColor = .white
         button.setTitleColor(.black, for: .normal)
-        button.heightAnchor.constraint(equalToConstant: 275).isActive = true
-        button.widthAnchor.constraint(equalToConstant: 275).isActive = true
         button.layer.cornerRadius = 16
         return button
     }()
@@ -27,6 +25,7 @@ class RegistrationController: UIViewController {
         let tf = CustomTextField(padding: 24, height: 44)
         tf.placeholder = "Enter full name"
         tf.backgroundColor = .white
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
     let emailTextField: CustomTextField = {
@@ -34,6 +33,7 @@ class RegistrationController: UIViewController {
         tf.placeholder = "Enter email"
         tf.keyboardType = .emailAddress
         tf.backgroundColor = .white
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
     let passwordTextField: CustomTextField = {
@@ -41,6 +41,7 @@ class RegistrationController: UIViewController {
         tf.placeholder = "Enter password"
         tf.isSecureTextEntry = true
         tf.backgroundColor = .white
+        tf.addTarget(self, action: #selector(handleTextChange), for: .editingChanged)
         return tf
     }()
     
@@ -48,8 +49,10 @@ class RegistrationController: UIViewController {
         let button = UIButton(type: .system)
         button.setTitle("Register", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(.darkGray, for: .disabled)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
-        button.backgroundColor = #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1)
+        button.backgroundColor = .lightGray
+        button.isEnabled = false
         button.heightAnchor.constraint(equalToConstant: 44).isActive = true
         button.layer.cornerRadius = 22
         return button
@@ -79,6 +82,9 @@ class RegistrationController: UIViewController {
     }()
     
     let gradientLayer = CAGradientLayer()
+    let registrationViewModel = RegistrationViewModel()
+    var selectPhotoHeight: NSLayoutConstraint?
+    var selectPhotoWidth: NSLayoutConstraint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,13 +93,20 @@ class RegistrationController: UIViewController {
         setupLayout()
         setupNotificationObservers()
         setupTapGesture()
+        setupIsFormValidObserver()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if self.traitCollection.verticalSizeClass == .compact {
             overallStackView.axis = .horizontal
+            overallStackView.distribution = .fillEqually
+            //selectPhotoHeight?.isActive = false
+            //selectPhotoWidth?.isActive = true
         } else {
             overallStackView.axis = .vertical
+            overallStackView.distribution = .fill
+            //selectPhotoHeight?.isActive = true
+            //selectPhotoWidth?.isActive = false
         }
     }
     
@@ -118,6 +131,9 @@ class RegistrationController: UIViewController {
         view.addSubview(overallStackView)
         overallStackView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 0, right: 50))
         overallStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        selectPhotoHeight = selectPhotoButton.heightAnchor.constraint(equalToConstant: 275)
+        selectPhotoHeight?.isActive = true
+        selectPhotoWidth = selectPhotoButton.widthAnchor.constraint(equalToConstant: 275)
     }
     
     fileprivate func setupTapGesture() {
@@ -126,6 +142,26 @@ class RegistrationController: UIViewController {
     
     @objc fileprivate func handleTapDismiss() {
         self.view.endEditing(true) // dismisses keyboard
+    }
+    
+    @objc fileprivate func handleTextChange(textField: UITextField) {
+        switch textField {
+        case fullNameTextField:
+            registrationViewModel.fullname = fullNameTextField.text
+        case emailTextField:
+            registrationViewModel.email = emailTextField.text
+        case passwordTextField:
+            registrationViewModel.password = passwordTextField.text
+        default:
+            ()
+        }
+    }
+    
+    fileprivate func setupIsFormValidObserver() {
+        registrationViewModel.isFormValidObserver = { [weak self] isFormValid in
+            self?.registerButton.isEnabled = isFormValid
+            self?.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1) : .lightGray
+        }
     }
     
     fileprivate func setupNotificationObservers() {
