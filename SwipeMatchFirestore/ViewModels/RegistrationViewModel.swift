@@ -6,17 +6,18 @@
 //  Copyright © 2019 OuSS. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class RegistrationViewModel {
+    var bindableImage = Bindable<UIImage>()
+    var bindableIsFormValid = Bindable<Bool>()
+    
     var fullname: String? { didSet { checkFormValidity() } }
     var email: String? { didSet { checkFormValidity() } }
     var password: String? { didSet { checkFormValidity() } }
     
-    var isFormValidObserver: ((Bool) -> ())?
-    
     fileprivate func checkFormValidity() {
         let isFormValid = fullname?.isEmpty == false && email?.isEmpty == false && password?.isEmpty == false
-        isFormValidObserver?(isFormValid)
+        bindableIsFormValid.value = isFormValid
     }
 }

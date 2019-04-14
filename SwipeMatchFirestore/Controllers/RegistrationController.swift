@@ -20,6 +20,9 @@ class RegistrationController: UIViewController {
         button.backgroundColor = .white
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 16
+        button.clipsToBounds = true
+        button.imageView?.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(handleSelectPhoto), for: .touchUpInside)
         return button
     }()
     
@@ -152,6 +155,12 @@ class RegistrationController: UIViewController {
         self.view.endEditing(true) // dismisses keyboard
     }
     
+    @objc fileprivate func handleSelectPhoto() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        present(imagePickerController, animated: true)
+    }
+    
     @objc fileprivate func handleTextChange(textField: UITextField) {
         switch textField {
         case fullNameTextField:
@@ -166,9 +175,14 @@ class RegistrationController: UIViewController {
     }
     
     fileprivate func setupIsFormValidObserver() {
-        registrationViewModel.isFormValidObserver = { [weak self] isFormValid in
-            self?.registerButton.isEnabled = isFormValid
-            self?.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1) : .lightGray
+        registrationViewModel.bindableImage.bind { [unowned self] (image) in
+            self.selectPhotoButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+        
+        registrationViewModel.bindableIsFormValid.bind { [unowned self] (isFormValid) in
+            guard let isFormValid = isFormValid else { return }
+            self.registerButton.isEnabled = isFormValid
+            self.registerButton.backgroundColor = isFormValid ? #colorLiteral(red: 0.8235294118, green: 0, blue: 0.3254901961, alpha: 1) : .lightGray
         }
     }
     
@@ -217,3 +231,15 @@ class RegistrationController: UIViewController {
     }
 }
 
+extension RegistrationController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as? UIImage
+        registrationViewModel.bindableImage.value = image
+        dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+}
