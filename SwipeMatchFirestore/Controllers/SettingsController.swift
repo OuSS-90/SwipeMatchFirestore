@@ -14,6 +14,8 @@ class CustomImagePickerController: UIImagePickerController {
 
 class SettingsController: UITableViewController {
     
+    let titles = ["Name", "Profession", "Age", "Bio"]
+    
     // instance properties
     lazy var image1Button = createButton(selector: #selector(handleSelectPhoto))
     lazy var image2Button = createButton(selector: #selector(handleSelectPhoto))
@@ -45,26 +47,53 @@ class SettingsController: UITableViewController {
         tableView.tableFooterView = UIView()
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = UIView()
-        header.addSubview(image1Button)
+    lazy var header: UIView = {
+        let view = UIView()
+        view.addSubview(image1Button)
         let padding: CGFloat = 16
-        image1Button.anchor(top: header.topAnchor, leading: header.leadingAnchor, bottom: header.bottomAnchor, trailing: nil, padding: .init(top: padding, left: padding, bottom: padding, right: 0))
-        image1Button.widthAnchor.constraint(equalTo: header.widthAnchor, multiplier: 0.45).isActive = true
+        image1Button.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: nil, padding: .init(top: padding, left: padding, bottom: padding, right: 0))
+        image1Button.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.45).isActive = true
         
         let stackView = UIStackView(arrangedSubviews: [image2Button, image3Button])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         stackView.spacing = padding
         
-        header.addSubview(stackView)
-        stackView.anchor(top: header.topAnchor, leading: image1Button.trailingAnchor, bottom: header.bottomAnchor, trailing: header.trailingAnchor, padding: .init(top: padding, left: padding, bottom: padding, right: padding))
-        
-        return header
+        view.addSubview(stackView)
+        stackView.anchor(top: view.topAnchor, leading: image1Button.trailingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: padding, left: padding, bottom: padding, right: padding))
+        return view
+    }()
+    
+    class HeaderLabel: UILabel {
+        override func drawText(in rect: CGRect) {
+            super.drawText(in: rect.insetBy(dx: 16, dy: 0))
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return section == 0 ? header : nil
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 300
+        return section == 0 ? 300 : 40
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return titles.count + 1
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return section == 0 ? nil : titles[section - 1]
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return section == 0 ? 0 : 1
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = SettingsCell(style: .default, reuseIdentifier: nil)
+        cell.textField.placeholder = "Enter \(titles[indexPath.section - 1])"
+        return cell
     }
     
     fileprivate func setupNavigationItems() {
@@ -80,6 +109,7 @@ class SettingsController: UITableViewController {
     @objc fileprivate func handleCancel() {
         dismiss(animated: true)
     }
+    
 }
 
 extension SettingsController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
