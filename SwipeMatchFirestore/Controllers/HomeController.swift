@@ -98,6 +98,7 @@ class HomeController: UIViewController {
         let cardView = CardView()
         cardView.cardViewModel = cardViewModel
         cardsDeckView.addSubview(cardView)
+        cardsDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
         lastDocument = document
     }
