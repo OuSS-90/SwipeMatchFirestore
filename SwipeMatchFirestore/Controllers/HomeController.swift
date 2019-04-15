@@ -8,19 +8,22 @@
 
 import UIKit
 import Firebase
+import JGProgressHUD
 
 class HomeController: UIViewController {
     
     let topStackView = TopNavigationStackView()
     let cardsDeckView = UIView()
-    let bottomStackView = HomeBottomStackView()
+    let bottomControls = HomeBottomStackView()
     
     var cardViewModels = [CardViewModel]()
+    var lastDocument : DocumentSnapshot?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
+        bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
         
         setupLayout()
         fetchUsersFromFirestore()
@@ -33,8 +36,12 @@ class HomeController: UIViewController {
         present(registrationController, animated: true)
     }
     
+    @objc fileprivate func handleRefresh() {
+        fetchNextUsers()
+    }
+    
     fileprivate func setupLayout() {
-        let stackView = UIStackView(arrangedSubviews: [topStackView, cardsDeckView, bottomStackView])
+        let stackView = UIStackView(arrangedSubviews: [topStackView, cardsDeckView, bottomControls])
         stackView.axis = .vertical
         
         view.addSubview(stackView)
@@ -45,29 +52,54 @@ class HomeController: UIViewController {
     }
     
     fileprivate func fetchUsersFromFirestore() {
-        Firestore.firestore().collection("users").getDocuments { (snapshot, err) in
-            if let err = err {
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Fetching Users"
+        hud.show(in: view)
+        
+        Firestore.firestore().collection("users").limit(to: 2).getDocuments { (snapshot, error) in
+            hud.dismiss()
+            if let err = error {
                 print("Failed to fetch users:", err)
                 return
             }
             
-            snapshot?.documents.forEach({ (documentSnapshot) in
-                let userDictionary = documentSnapshot.data()
-                let user = User(dictionary: userDictionary, id: documentSnapshot.documentID)
-                let cardViewModel = CardViewModel(user: user)
-                self.cardViewModels.append(cardViewModel)
+            snapshot?.documents.forEach({ (document) in
+                self.setupCardView(document: document)
             })
-            self.setupCardsView()
         }
     }
     
-    fileprivate func setupCardsView() {
-        cardViewModels.forEach { (cardViewModel) in
-            let cardView = CardView()
-            cardView.cardViewModel = cardViewModel
-            cardsDeckView.addSubview(cardView)
-            cardView.fillSuperview()
+    fileprivate func fetchNextUsers() {
+        guard let lastDocument = lastDocument else { return }
+        
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Fetching Users"
+        hud.show(in: view)
+        
+        Firestore.firestore().collection("users").start(afterDocument: lastDocument).limit(to: 2).getDocuments { (snapshot, error) in
+            
+            hud.dismiss()
+            
+            if let err = error {
+                print("Failed to fetch users:", err)
+                return
+            }
+            
+            snapshot?.documents.forEach({ (document) in
+                self.setupCardView(document: document)
+            })
         }
+    }
+    
+    fileprivate func setupCardView(document: QueryDocumentSnapshot) {
+        let userDictionary = document.data()
+        let user = User(dictionary: userDictionary, id: document.documentID)
+        let cardViewModel = CardViewModel(user: user)
+        let cardView = CardView()
+        cardView.cardViewModel = cardViewModel
+        cardsDeckView.addSubview(cardView)
+        cardView.fillSuperview()
+        lastDocument = document
     }
 }
 

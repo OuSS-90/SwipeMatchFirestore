@@ -16,12 +16,11 @@ class CardViewModel {
     fileprivate var imageIndex = 0 {
         didSet{
             let imageUrl = imagesUrl[imageIndex]
-            let image = UIImage(named: imageUrl)
-            imageIndexObserver?(imageIndex, image)
+            imageIndexObserver?(imageIndex, imageUrl)
         }
     }
     
-    var imageIndexObserver: ((Int, UIImage?) -> ())?
+    var imageIndexObserver: ((Int, String?) -> ())?
     
     init(user: User, textAlignment: NSTextAlignment = .left) {
         let attributedText = NSMutableAttributedString(string: user.name ?? "", attributes: [.font : UIFont.systemFont(ofSize: 32, weight: .heavy)])

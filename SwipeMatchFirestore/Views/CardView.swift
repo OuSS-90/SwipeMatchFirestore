@@ -104,7 +104,6 @@ class CardView: UIView {
     }
     
     @objc func handleTapGesture(gesture: UITapGestureRecognizer) {
-        //guard let cardViewModel = cardViewModel else { return }
         let location = gesture.location(in: nil)
         let shouldAdvance = location.x > frame.width / 2
         if shouldAdvance {
@@ -116,8 +115,10 @@ class CardView: UIView {
     }
     
     fileprivate func setupImageIndexObserver() {
-        cardViewModel?.imageIndexObserver = { [weak self] (index, image) in
-            self?.imageView.image = image
+        cardViewModel?.imageIndexObserver = { [weak self] (index, imageUrl) in
+            if let imageUrl = imageUrl, let url = URL(string: imageUrl) {
+                self?.imageView.sd_setImage(with: url)
+            }
             self?.barsStackView.arrangedSubviews.forEach { (view) in
                 view.backgroundColor = self?.deseletedBarColor
             }
