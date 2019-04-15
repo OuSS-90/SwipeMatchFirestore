@@ -19,6 +19,7 @@
 		CD1B8388225F7C9200747E50 /* TopNavigationStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1B8387225F7C9200747E50 /* TopNavigationStackView.swift */; };
 		CD1B838A225F7E4600747E50 /* HomeBottomStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1B8389225F7E4600747E50 /* HomeBottomStackView.swift */; };
 		CD1B838C225F87F700747E50 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1B838B225F87F700747E50 /* CardView.swift */; };
+		CD3448A22264DD0E007A8CC7 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD3448A12264DD0E007A8CC7 /* SettingsController.swift */; };
 		CDCB9D3D2260D4EB00F61BC7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCB9D3C2260D4EB00F61BC7 /* User.swift */; };
 		CDCB9D412260E8E900F61BC7 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCB9D402260E8E900F61BC7 /* CardViewModel.swift */; };
 		CDCE00B122636C95001C50BF /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCE00B022636C95001C50BF /* RegistrationViewModel.swift */; };
@@ -43,6 +44,7 @@
 		CD1B8387225F7C9200747E50 /* TopNavigationStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationStackView.swift; sourceTree = "<group>"; };
 		CD1B8389225F7E4600747E50 /* HomeBottomStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeBottomStackView.swift; sourceTree = "<group>"; };
 		CD1B838B225F87F700747E50 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		CD3448A12264DD0E007A8CC7 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		CDCB9D3C2260D4EB00F61BC7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CDCB9D402260E8E900F61BC7 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		CDCE00B022636C95001C50BF /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				CD1B8373225F7BB300747E50 /* HomeController.swift */,
 				CD0F3241226236870066E1C7 /* RegistrationController.swift */,
 				CDCE00B422638365001C50BF /* Bindable.swift */,
+				CD3448A12264DD0E007A8CC7 /* SettingsController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD1B838A225F7E4600747E50 /* HomeBottomStackView.swift in Sources */,
+				CD3448A22264DD0E007A8CC7 /* SettingsController.swift in Sources */,
 				CDCE00B122636C95001C50BF /* RegistrationViewModel.swift in Sources */,
 				CDCE00B522638365001C50BF /* Bindable.swift in Sources */,
 				CD0F3242226236870066E1C7 /* RegistrationController.swift in Sources */,
