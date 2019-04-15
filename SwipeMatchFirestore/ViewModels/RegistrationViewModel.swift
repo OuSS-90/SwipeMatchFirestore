@@ -39,10 +39,15 @@ class RegistrationViewModel {
     }
     
     fileprivate func saveImageToFirebase(completion: @escaping (Result<Bool,Error>) -> ()) {
+        guard let imageData = self.bindableImage.value?.jpegData(compressionQuality: 0.75) else { return }
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        
         let filename = UUID().uuidString
         let ref = Storage.storage().reference(withPath: "/images/\(filename)")
-        guard let imageData = self.bindableImage.value?.jpegData(compressionQuality: 0.75) else { return }
-        ref.putData(imageData, metadata: nil, completion: { (_, error) in
+        
+        ref.putData(imageData, metadata: metadata, completion: { (_, error) in
             
             if let err = error {
                 completion(.failure(err))
@@ -68,7 +73,7 @@ class RegistrationViewModel {
     fileprivate func saveInfoToFirestore(imageUrl: String, completion: @escaping (Result<Bool,Error>) -> ()) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let fullname = fullname else { return }
-        let docData = ["fullName": fullname, "uid": uid, "imageUrl1": imageUrl]
+        let docData = ["fullName": fullname, "imageUrl1": imageUrl]
         Firestore.firestore().collection("users").document(uid).setData(docData) { (error) in
             if let err = error {
                 completion(.failure(err))

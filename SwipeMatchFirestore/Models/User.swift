@@ -9,8 +9,21 @@
 import Foundation
 
 struct User {
-    let name: String
-    let age: Int
-    let profession: String
-    let imagesUrl: [String]
+    var id: String?
+    var name: String?
+    var age: Int?
+    var profession: String?
+    var imagesUrl: [String]?
+    
+    init(dictionary: [String: Any], id: String? = nil) {
+        // we'll initialize our user here
+        self.age = dictionary["age"] as? Int
+        self.profession = dictionary["profession"] as? String
+        self.name = dictionary["fullName"] as? String
+        if let imageUrl1 = dictionary["imageUrl1"] as? String {
+            self.imagesUrl = [imageUrl1]
+        }
+        
+        self.id = id
+    }
 }

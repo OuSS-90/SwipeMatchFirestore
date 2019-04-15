@@ -7,17 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
 class HomeController: UIViewController {
     
     let topStackView = TopNavigationStackView()
     let cardsDeckView = UIView()
     let bottomStackView = HomeBottomStackView()
-    
-    let users = [
-        User(name: "Kelly", age: 23, profession: "Music DJ", imagesUrl: ["kelly1" ,"kelly2", "kelly3"]),
-        User(name: "Jane", age: 18, profession: "Teacher", imagesUrl: ["jane1" ,"jane2", "jane3"])
-    ]
     
     var cardViewModels = [CardViewModel]()
 
@@ -27,7 +23,7 @@ class HomeController: UIViewController {
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         
         setupLayout()
-        setupCardView()
+        fetchUsersFromFirestore()
     }
     
     // MARK:- fileprivate
@@ -48,8 +44,24 @@ class HomeController: UIViewController {
         stackView.bringSubviewToFront(cardsDeckView)
     }
     
-    fileprivate func setupCardView() {
-        cardViewModels = users.map{CardViewModel(user: $0)}
+    fileprivate func fetchUsersFromFirestore() {
+        Firestore.firestore().collection("users").getDocuments { (snapshot, err) in
+            if let err = err {
+                print("Failed to fetch users:", err)
+                return
+            }
+            
+            snapshot?.documents.forEach({ (documentSnapshot) in
+                let userDictionary = documentSnapshot.data()
+                let user = User(dictionary: userDictionary, id: documentSnapshot.documentID)
+                let cardViewModel = CardViewModel(user: user)
+                self.cardViewModels.append(cardViewModel)
+            })
+            self.setupCardsView()
+        }
+    }
+    
+    fileprivate func setupCardsView() {
         cardViewModels.forEach { (cardViewModel) in
             let cardView = CardView()
             cardView.cardViewModel = cardViewModel

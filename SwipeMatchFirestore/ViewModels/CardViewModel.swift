@@ -24,11 +24,13 @@ class CardViewModel {
     var imageIndexObserver: ((Int, UIImage?) -> ())?
     
     init(user: User, textAlignment: NSTextAlignment = .left) {
-        let attributedText = NSMutableAttributedString(string: user.name, attributes: [.font : UIFont.systemFont(ofSize: 32, weight: .heavy)])
-        attributedText.append(NSAttributedString(string: " \(user.age)", attributes: [.font : UIFont.systemFont(ofSize: 24, weight: .regular)]))
-        attributedText.append(NSAttributedString(string: "\n\(user.profession)", attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .regular)]))
+        let attributedText = NSMutableAttributedString(string: user.name ?? "", attributes: [.font : UIFont.systemFont(ofSize: 32, weight: .heavy)])
+        let ageString = user.age != nil ? "\(user.age!)" : "N\\A"
+        attributedText.append(NSAttributedString(string: " \(ageString)", attributes: [.font : UIFont.systemFont(ofSize: 24, weight: .regular)]))
+        let professionString = user.profession != nil ? user.profession! : "Not available"
+        attributedText.append(NSAttributedString(string: "\n\(professionString)", attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .regular)]))
         self.attributedText = attributedText
-        self.imagesUrl = user.imagesUrl
+        self.imagesUrl = user.imagesUrl ?? [""]
         self.textAlignment = textAlignment
     }
     
