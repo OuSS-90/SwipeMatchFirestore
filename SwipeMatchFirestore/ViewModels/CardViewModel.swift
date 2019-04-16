@@ -10,12 +10,12 @@ import UIKit
 
 class CardViewModel {
     let attributedText: NSAttributedString
-    let imagesUrl: [String]
+    let imageUrls: [String]
     let textAlignment: NSTextAlignment
     
     fileprivate var imageIndex = 0 {
         didSet{
-            let imageUrl = imagesUrl[imageIndex]
+            let imageUrl = imageUrls[imageIndex]
             imageIndexObserver?(imageIndex, imageUrl)
         }
     }
@@ -29,12 +29,18 @@ class CardViewModel {
         let professionString = user.profession != nil ? user.profession! : "Not available"
         attributedText.append(NSAttributedString(string: "\n\(professionString)", attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .regular)]))
         self.attributedText = attributedText
-        self.imagesUrl = user.imagesUrl ?? [""]
+        
+        var imageUrls = [String]() // empty string array
+        if let url = user.imageUrl1 { imageUrls.append(url) }
+        if let url = user.imageUrl2 { imageUrls.append(url) }
+        if let url = user.imageUrl3 { imageUrls.append(url) }
+        
+        self.imageUrls = imageUrls
         self.textAlignment = textAlignment
     }
     
     func advanceToNextPhoto() {
-        imageIndex = min(imageIndex + 1, imagesUrl.count - 1)
+        imageIndex = min(imageIndex + 1, imageUrls.count - 1)
     }
     
     func backToPreviousPhoto() {

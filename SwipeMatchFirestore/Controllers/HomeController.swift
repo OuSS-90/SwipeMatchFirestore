@@ -94,7 +94,7 @@ class HomeController: UIViewController {
     
     fileprivate func setupCardView(document: QueryDocumentSnapshot) {
         let userDictionary = document.data()
-        let user = User(dictionary: userDictionary, id: document.documentID)
+        let user = User(dictionary: userDictionary)
         let cardViewModel = CardViewModel(user: user)
         let cardView = CardView()
         cardView.cardViewModel = cardViewModel

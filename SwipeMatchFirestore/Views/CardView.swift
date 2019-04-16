@@ -14,11 +14,11 @@ class CardView: UIView {
     var cardViewModel: CardViewModel? {
         didSet{
             guard let cardViewModel = cardViewModel else { return }
-            guard let imageUrl = cardViewModel.imagesUrl.first else { return }
+            guard let imageUrl = cardViewModel.imageUrls.first else { return }
             guard let url = URL(string: imageUrl) else { return }
             imageView.sd_setImage(with: url)
             informationLabel.attributedText = cardViewModel.attributedText
-            (0..<cardViewModel.imagesUrl.count).forEach { (_) in
+            (0..<cardViewModel.imageUrls.count).forEach { (_) in
                 let view = UIView()
                 view.backgroundColor = deseletedBarColor
                 barsStackView.addArrangedSubview(view)
