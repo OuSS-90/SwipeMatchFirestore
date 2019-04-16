@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Firebase
+import SDWebImage
+import JGProgressHUD
 
 class CustomImagePickerController: UIImagePickerController {
     var imageButton: UIButton?
@@ -39,12 +42,39 @@ class SettingsController: UITableViewController {
         return button
     }
     
+    var user: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavigationItems()
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         tableView.tableFooterView = UIView()
+        fetchUsersFromFirestore()
+    }
+    
+    fileprivate func fetchUsersFromFirestore() {
+        guard let id = Auth.auth().currentUser?.uid else { return }
+        Firestore.firestore().collection("users").document(id).getDocument { (snapshot, error) in
+            if let err = error {
+                print(err)
+                return
+            }
+            
+            
+            guard let id = snapshot?.documentID else { return }
+            guard let dic = snapshot?.data() else { return }
+            self.user = User(dictionary: dic, id: id)
+            self.loadUserPhotos()
+            self.tableView.reloadData()
+        }
+    }
+    
+    fileprivate func loadUserPhotos() {
+        guard let imageUrl = user?.imagesUrl?.first, let url = URL(string: imageUrl) else { return }
+        SDWebImageManager.shared.loadImage(with: url, options: .continueInBackground, progress: nil) { (image, _, _, _, _, _) in
+            self.image1Button.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
     }
     
     lazy var header: UIView = {
@@ -93,6 +123,18 @@ class SettingsController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = SettingsCell(style: .default, reuseIdentifier: nil)
         cell.textField.placeholder = "Enter \(titles[indexPath.section - 1])"
+        switch indexPath.section {
+        case 1:
+            cell.textField.text = user?.name
+        case 2:
+            cell.textField.text = user?.profession
+        case 3:
+            if let age = user?.age {
+                cell.textField.text = String(age)
+            }
+        default:
+            cell.textField.placeholder = "Enter Bio"
+        }
         return cell
     }
     
