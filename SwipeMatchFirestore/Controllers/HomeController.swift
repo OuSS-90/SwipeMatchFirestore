@@ -30,6 +30,17 @@ class HomeController: UIViewController {
         fetchCurrentUser()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // you want to kick the user out when they log out
+        if Auth.auth().currentUser == nil {
+            let registrationController = LoginController()
+            registrationController.delegate = self
+            let navController = UINavigationController(rootViewController: registrationController)
+            present(navController, animated: true)
+        }
+    }
+    
     // MARK:- fileprivate
     
     @objc func handleSettings() {
@@ -124,6 +135,12 @@ class HomeController: UIViewController {
 
 extension HomeController: SettingsControllerDelegate {
     func didSaveSettings() {
+        fetchCurrentUser()
+    }
+}
+
+extension HomeController: LoginControllerDelegate {
+    func didFinishLoggingIn() {
         fetchCurrentUser()
     }
 }

@@ -12,6 +12,8 @@ import JGProgressHUD
 
 class RegistrationController: UIViewController {
     
+    var delegate: LoginControllerDelegate?
+    
     // UI Components
     let selectPhotoButton: UIButton = {
         let button = UIButton(type: .system)
@@ -86,6 +88,21 @@ class RegistrationController: UIViewController {
         return stackView
     }()
     
+    let backToLoginButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Back to Login", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+        button.addTarget(self, action: #selector(handleBackToLogin), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc fileprivate func handleBackToLogin() {
+        let loginController = LoginController()
+        loginController.delegate = delegate
+        navigationController?.popViewController(animated: true)
+    }
+    
     let gradientLayer = CAGradientLayer()
     let registrationViewModel = RegistrationViewModel()
     let registeringHUD = JGProgressHUD(style: .dark)
@@ -140,6 +157,8 @@ class RegistrationController: UIViewController {
         view.addSubview(overallStackView)
         overallStackView.anchor(top: nil, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 50, bottom: 0, right: 50))
         overallStackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        view.addSubview(backToLoginButton)
+        backToLoginButton.anchor(top: nil, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
     }
     
     fileprivate func setupTapGesture() {
@@ -193,7 +212,9 @@ class RegistrationController: UIViewController {
         registrationViewModel.performRegistration { (result) in
             switch result {
             case .success(_):
-                print("success")
+                self.dismiss(animated: true, completion: {
+                    self.delegate?.didFinishLoggingIn()
+                })
             case .failure(let error):
                 self.showHUDWithError(error: error)
             }
