@@ -17,7 +17,7 @@ class CustomImagePickerController: UIImagePickerController {
 
 class SettingsController: UITableViewController {
     
-    let titles = ["Name", "Profession", "Age", "Bio"]
+    let titles = ["Name", "Profession", "Age", "Bio", "Seeking Age Range"]
     
     // instance properties
     lazy var image1Button = createButton(selector: #selector(handleSelectPhoto))
@@ -131,8 +131,23 @@ class SettingsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        // age range cell
+        if indexPath.section == 5 {
+            let ageRangeCell = AgeRangeCell(style: .default, reuseIdentifier: nil)
+            ageRangeCell.minSlider.addTarget(self, action: #selector(handleMinAgeChange), for: .valueChanged)
+            ageRangeCell.maxSlider.addTarget(self, action: #selector(handleMaxAgeChange), for: .valueChanged)
+            // we need to set up the labels on our cell here
+            ageRangeCell.minLabel.text = "Min \(user?.minSeekingAge ?? -1)"
+            ageRangeCell.maxLabel.text = "Max \(user?.maxSeekingAge ?? -1)"
+            ageRangeCell.minSlider.value = Float(user?.minSeekingAge ?? -1)
+            ageRangeCell.maxSlider.value = Float(user?.maxSeekingAge ?? -1)
+            return ageRangeCell
+        }
+        
         let cell = SettingsCell(style: .default, reuseIdentifier: nil)
         cell.textField.placeholder = "Enter \(titles[indexPath.section - 1])"
+        
         switch indexPath.section {
         case 1:
             cell.textField.text = user?.name
@@ -163,6 +178,27 @@ class SettingsController: UITableViewController {
         self.user?.age = Int(textField.text ?? "")
     }
     
+    @objc fileprivate func handleMinAgeChange(slider: UISlider) {
+        evaluateMinMax()
+    }
+    
+    @objc fileprivate func handleMaxAgeChange(slider: UISlider) {
+        evaluateMinMax()
+    }
+    
+    fileprivate func evaluateMinMax() {
+        guard let ageRangeCell = tableView.cellForRow(at: [5, 0]) as? AgeRangeCell else { return }
+        let minValue = Int(ageRangeCell.minSlider.value)
+        var maxValue = Int(ageRangeCell.maxSlider.value)
+        maxValue = max(minValue, maxValue)
+        ageRangeCell.maxSlider.value = Float(maxValue)
+        ageRangeCell.minLabel.text = "Min \(minValue)"
+        ageRangeCell.maxLabel.text = "Max \(maxValue)"
+        
+        user?.minSeekingAge = minValue
+        user?.maxSeekingAge = maxValue
+    }
+    
     fileprivate func setupNavigationItems() {
         navigationItem.title = "Settings"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -183,7 +219,9 @@ class SettingsController: UITableViewController {
             "imageUrl2": user?.imageUrl2 ?? "",
             "imageUrl3": user?.imageUrl3 ?? "",
             "age": user?.age ?? -1,
-            "profession": user?.profession ?? ""
+            "profession": user?.profession ?? "",
+            "minSeekingAge": user?.minSeekingAge ?? -1,
+            "maxSeekingAge": user?.maxSeekingAge ?? -1
         ]
         
         let hud = JGProgressHUD(style: .dark)

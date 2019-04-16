@@ -73,7 +73,7 @@ class RegistrationViewModel {
     fileprivate func saveInfoToFirestore(imageUrl: String, completion: @escaping (Result<Bool,Error>) -> ()) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let fullname = fullname else { return }
-        let docData = ["fullName": fullname, "imageUrl1": imageUrl]
+        let docData = ["fullName": fullname,"uid": uid, "imageUrl1": imageUrl]
         Firestore.firestore().collection("users").document(uid).setData(docData) { (error) in
             if let err = error {
                 completion(.failure(err))
