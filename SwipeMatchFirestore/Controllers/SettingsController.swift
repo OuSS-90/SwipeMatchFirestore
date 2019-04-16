@@ -11,6 +11,10 @@ import Firebase
 import SDWebImage
 import JGProgressHUD
 
+protocol SettingsControllerDelegate {
+    func didSaveSettings()
+}
+
 class CustomImagePickerController: UIImagePickerController {
     var imageButton: UIButton?
 }
@@ -18,6 +22,7 @@ class CustomImagePickerController: UIImagePickerController {
 class SettingsController: UITableViewController {
     
     let titles = ["Name", "Profession", "Age", "Bio", "Seeking Age Range"]
+    var delegate: SettingsControllerDelegate?
     
     // instance properties
     lazy var image1Button = createButton(selector: #selector(handleSelectPhoto))
@@ -50,22 +55,19 @@ class SettingsController: UITableViewController {
         setupNavigationItems()
         tableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         tableView.tableFooterView = UIView()
-        fetchUsersFromFirestore()
+        fetchCurrentUser()
     }
     
-    fileprivate func fetchUsersFromFirestore() {
-        guard let id = Auth.auth().currentUser?.uid else { return }
-        Firestore.firestore().collection("users").document(id).getDocument { (snapshot, error) in
-            if let err = error {
-                print(err)
-                return
+    fileprivate func fetchCurrentUser() {
+        UserService.shared.fetchCurrentUser { (result) in
+            switch result {
+            case .success(let user):
+                self.user = user
+                self.loadUserPhotos()
+                self.tableView.reloadData()
+            case .failure(let error):
+                print(error)
             }
-            
-            
-            guard let dic = snapshot?.data() else { return }
-            self.user = User(dictionary: dic)
-            self.loadUserPhotos()
-            self.tableView.reloadData()
         }
     }
     
@@ -234,7 +236,9 @@ class SettingsController: UITableViewController {
                 return
             }
             
-            print("Finished saving user info")
+            self.dismiss(animated: true, completion: {
+                self.delegate?.didSaveSettings()
+            })
         }
     }
     

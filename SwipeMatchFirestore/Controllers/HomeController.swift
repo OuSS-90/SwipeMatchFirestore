@@ -18,6 +18,7 @@ class HomeController: UIViewController {
     
     var cardViewModels = [CardViewModel]()
     var lastDocument : DocumentSnapshot?
+    fileprivate var user: User?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,13 +27,14 @@ class HomeController: UIViewController {
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
         
         setupLayout()
-        fetchUsersFromFirestore()
+        fetchCurrentUser()
     }
     
     // MARK:- fileprivate
     
     @objc func handleSettings() {
         let settingsController = SettingsController()
+        settingsController.delegate = self
         let navController = UINavigationController(rootViewController: settingsController)
         present(navController, animated: true)
     }
@@ -52,12 +54,27 @@ class HomeController: UIViewController {
         stackView.bringSubviewToFront(cardsDeckView)
     }
     
+    fileprivate func fetchCurrentUser() {
+        UserService.shared.fetchCurrentUser { (result) in
+            switch result {
+            case .success(let user):
+                self.user = user
+                self.fetchUsersFromFirestore()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     fileprivate func fetchUsersFromFirestore() {
+        guard let minAge = user?.minSeekingAge, let maxAge = user?.maxSeekingAge else { return }
+        
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Fetching Users"
         hud.show(in: view)
         
-        Firestore.firestore().collection("users").limit(to: 2).getDocuments { (snapshot, error) in
+        //Firestore.firestore().collection("users").limit(to: 2).getDocuments { (snapshot, error) in
+        Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: minAge).whereField("age", isLessThanOrEqualTo: maxAge).getDocuments { (snapshot, error) in
             hud.dismiss()
             if let err = error {
                 print("Failed to fetch users:", err)
@@ -102,6 +119,12 @@ class HomeController: UIViewController {
         cardsDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
         lastDocument = document
+    }
+}
+
+extension HomeController: SettingsControllerDelegate {
+    func didSaveSettings() {
+        fetchCurrentUser()
     }
 }
 
