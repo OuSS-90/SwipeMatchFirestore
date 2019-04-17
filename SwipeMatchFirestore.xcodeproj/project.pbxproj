@@ -31,6 +31,7 @@
 		CDCE00B322637ADE001C50BF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CDCE00B222637ADE001C50BF /* GoogleService-Info.plist */; };
 		CDCE00B522638365001C50BF /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCE00B422638365001C50BF /* Bindable.swift */; };
 		CDD47E85226766AD00C4B488 /* UserDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD47E84226766AD00C4B488 /* UserDetailsController.swift */; };
+		CDD47E892267944600C4B488 /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD47E882267944600C4B488 /* SwipingPhotosController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,7 @@
 		CDCE00B222637ADE001C50BF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CDCE00B422638365001C50BF /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		CDD47E84226766AD00C4B488 /* UserDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsController.swift; sourceTree = "<group>"; };
+		CDD47E882267944600C4B488 /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				CDD47E84226766AD00C4B488 /* UserDetailsController.swift */,
+				CDD47E882267944600C4B488 /* SwipingPhotosController.swift */,
 			);
 			path = "User Details";
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				CDCB9D412260E8E900F61BC7 /* CardViewModel.swift in Sources */,
 				CD1B838C225F87F700747E50 /* CardView.swift in Sources */,
 				CD1B8388225F7C9200747E50 /* TopNavigationStackView.swift in Sources */,
+				CDD47E892267944600C4B488 /* SwipingPhotosController.swift in Sources */,
 				CDCB9D3D2260D4EB00F61BC7 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
