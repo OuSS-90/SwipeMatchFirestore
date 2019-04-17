@@ -143,6 +143,7 @@ class HomeController: UIViewController {
 }
 
 extension HomeController: LoginControllerDelegate, SettingsControllerDelegate, CardViewDelegate {
+    
     func didFinishLoggingIn() {
         fetchCurrentUser()
     }
@@ -151,8 +152,9 @@ extension HomeController: LoginControllerDelegate, SettingsControllerDelegate, C
         fetchCurrentUser()
     }
     
-    func didTapMoreInfo() {
+    func didTapMoreInfo(cardViewModel: CardViewModel?) {
         let userDetailsController = UserDetailsController()
+        userDetailsController.cardViewModel = cardViewModel
         present(userDetailsController, animated: true)
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 
 protocol CardViewDelegate {
-    func didTapMoreInfo()
+    func didTapMoreInfo(cardViewModel: CardViewModel?)
 }
 
 class CardView: UIView {
@@ -130,7 +130,7 @@ class CardView: UIView {
     }
     
     @objc fileprivate func handleMoreInfo() {
-        delegate?.didTapMoreInfo()
+        delegate?.didTapMoreInfo(cardViewModel: cardViewModel)
     }
     
     fileprivate func setupImageIndexObserver() {
