@@ -9,7 +9,13 @@
 import UIKit
 import SDWebImage
 
+protocol CardViewDelegate {
+    func didTapMoreInfo()
+}
+
 class CardView: UIView {
+    
+    var delegate: CardViewDelegate?
     
     var cardViewModel: CardViewModel? {
         didSet{
@@ -41,6 +47,13 @@ class CardView: UIView {
         return label
     }()
     
+    fileprivate let moreInfoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(#imageLiteral(resourceName: "info_icon").withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(handleMoreInfo), for: .touchUpInside)
+        return button
+    }()
+    
     fileprivate let deseletedBarColor = UIColor(white: 0, alpha: 0.1)
     fileprivate let barsStackView = UIStackView()
     fileprivate let gradientLayer = CAGradientLayer()
@@ -66,6 +79,9 @@ class CardView: UIView {
     }
     
     fileprivate func setupLayout() {
+        layer.cornerRadius = 10
+        clipsToBounds = true
+        
         addSubview(imageView)
         setupBarsStackView()
         setupGradientLayer()
@@ -74,8 +90,8 @@ class CardView: UIView {
         imageView.fillSuperview()
         informationLabel.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16))
         
-        layer.cornerRadius = 10
-        clipsToBounds = true
+        addSubview(moreInfoButton)
+        moreInfoButton.anchor(top: nil, leading: nil, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 16, right: 16), size: .init(width: 44, height: 44))
     }
     
     fileprivate func setupBarsStackView() {
@@ -111,7 +127,10 @@ class CardView: UIView {
         } else {
             cardViewModel?.backToPreviousPhoto()
         }
-        
+    }
+    
+    @objc fileprivate func handleMoreInfo() {
+        delegate?.didTapMoreInfo()
     }
     
     fileprivate func setupImageIndexObserver() {

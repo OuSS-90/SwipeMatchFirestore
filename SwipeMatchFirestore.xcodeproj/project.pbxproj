@@ -30,6 +30,7 @@
 		CDCE00B122636C95001C50BF /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCE00B022636C95001C50BF /* RegistrationViewModel.swift */; };
 		CDCE00B322637ADE001C50BF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CDCE00B222637ADE001C50BF /* GoogleService-Info.plist */; };
 		CDCE00B522638365001C50BF /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCE00B422638365001C50BF /* Bindable.swift */; };
+		CDD47E85226766AD00C4B488 /* UserDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD47E84226766AD00C4B488 /* UserDetailsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		CDCE00B022636C95001C50BF /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
 		CDCE00B222637ADE001C50BF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CDCE00B422638365001C50BF /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
+		CDD47E84226766AD00C4B488 /* UserDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 		CDCB9D3E2260E86500F61BC7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CDD47E832267669500C4B488 /* User Details */,
 				CD5D94E8226634AD009F36AF /* Login */,
 				CD1B8373225F7BB300747E50 /* HomeController.swift */,
 				CD0F3241226236870066E1C7 /* RegistrationController.swift */,
@@ -193,6 +196,14 @@
 				CD5D94EB22663512009F36AF /* LoginViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		CDD47E832267669500C4B488 /* User Details */ = {
+			isa = PBXGroup;
+			children = (
+				CDD47E84226766AD00C4B488 /* UserDetailsController.swift */,
+			);
+			path = "User Details";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,6 +337,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDD47E85226766AD00C4B488 /* UserDetailsController.swift in Sources */,
 				CD5D94E2226624E1009F36AF /* AgeRangeCell.swift in Sources */,
 				CD3448A42264E44A007A8CC7 /* SettingsCell.swift in Sources */,
 				CD1B838A225F7E4600747E50 /* HomeBottomStackView.swift in Sources */,

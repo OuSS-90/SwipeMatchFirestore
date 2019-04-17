@@ -66,6 +66,7 @@ class HomeController: UIViewController {
     }
     
     fileprivate func fetchCurrentUser() {
+        cardsDeckView.subviews.forEach({$0.removeFromSuperview()})
         UserService.shared.fetchCurrentUser { (result) in
             switch result {
             case .success(let user):
@@ -93,7 +94,12 @@ class HomeController: UIViewController {
             }
             
             snapshot?.documents.forEach({ (document) in
-                self.setupCardView(document: document)
+                let userDictionary = document.data()
+                let user = User(dictionary: userDictionary)
+                if user.uid != Auth.auth().currentUser?.uid {
+                    self.setupCardView(user: user)
+                    self.lastDocument = document
+                }
             })
         }
     }
@@ -115,33 +121,39 @@ class HomeController: UIViewController {
             }
             
             snapshot?.documents.forEach({ (document) in
-                self.setupCardView(document: document)
+                let userDictionary = document.data()
+                let user = User(dictionary: userDictionary)
+                if user.uid != Auth.auth().currentUser?.uid {
+                    self.setupCardView(user: user)
+                    self.lastDocument = document
+                }
             })
         }
     }
     
-    fileprivate func setupCardView(document: QueryDocumentSnapshot) {
-        let userDictionary = document.data()
-        let user = User(dictionary: userDictionary)
+    fileprivate func setupCardView(user: User) {
         let cardViewModel = CardViewModel(user: user)
         let cardView = CardView()
         cardView.cardViewModel = cardViewModel
+        cardView.delegate = self
         cardsDeckView.addSubview(cardView)
         cardsDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
-        lastDocument = document
     }
 }
 
-extension HomeController: SettingsControllerDelegate {
+extension HomeController: LoginControllerDelegate, SettingsControllerDelegate, CardViewDelegate {
+    func didFinishLoggingIn() {
+        fetchCurrentUser()
+    }
+    
     func didSaveSettings() {
         fetchCurrentUser()
     }
-}
-
-extension HomeController: LoginControllerDelegate {
-    func didFinishLoggingIn() {
-        fetchCurrentUser()
+    
+    func didTapMoreInfo() {
+        let userDetailsController = UserDetailsController()
+        present(userDetailsController, animated: true)
     }
 }
 
