@@ -114,7 +114,7 @@ class RegistrationController: UIViewController {
         setupLayout()
         setupNotificationObservers()
         setupTapGesture()
-        setupIsFormValidObserver()
+        setupRegistrationViewModelObserver()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -188,7 +188,7 @@ class RegistrationController: UIViewController {
         }
     }
     
-    fileprivate func setupIsFormValidObserver() {
+    fileprivate func setupRegistrationViewModelObserver() {
         registrationViewModel.bindableImage.bind { [unowned self] (image) in
             self.selectPhotoButton.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
@@ -258,6 +258,7 @@ extension RegistrationController: UIImagePickerControllerDelegate, UINavigationC
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.originalImage] as? UIImage
         registrationViewModel.bindableImage.value = image
+        registrationViewModel.checkFormValidity()
         dismiss(animated: true)
     }
     

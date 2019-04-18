@@ -25,6 +25,7 @@
 		CD5D94E722662BE3009F36AF /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D94E622662BE3009F36AF /* UserService.swift */; };
 		CD5D94EA226634F3009F36AF /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D94E9226634F3009F36AF /* LoginController.swift */; };
 		CD5D94EC22663512009F36AF /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD5D94EB22663512009F36AF /* LoginViewModel.swift */; };
+		CD6FD1AA2268B6E600C6F278 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD6FD1A92268B6E600C6F278 /* Constants.swift */; };
 		CDCB9D3D2260D4EB00F61BC7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCB9D3C2260D4EB00F61BC7 /* User.swift */; };
 		CDCB9D412260E8E900F61BC7 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCB9D402260E8E900F61BC7 /* CardViewModel.swift */; };
 		CDCE00B122636C95001C50BF /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCE00B022636C95001C50BF /* RegistrationViewModel.swift */; };
@@ -57,6 +58,7 @@
 		CD5D94E622662BE3009F36AF /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		CD5D94E9226634F3009F36AF /* LoginController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		CD5D94EB22663512009F36AF /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		CD6FD1A92268B6E600C6F278 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CDCB9D3C2260D4EB00F61BC7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CDCB9D402260E8E900F61BC7 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		CDCE00B022636C95001C50BF /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 		CD1B8370225F7BB300747E50 /* SwipeMatchFirestore */ = {
 			isa = PBXGroup;
 			children = (
+				CD6FD1A82268B6D000C6F278 /* Utilities */,
 				CD5D94E522662BD5009F36AF /* Services */,
 				CD1B8384225F7BD900747E50 /* Extensions */,
 				CDCB9D3B2260D4DA00F61BC7 /* Models */,
@@ -167,6 +170,14 @@
 				CD5D94E9226634F3009F36AF /* LoginController.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		CD6FD1A82268B6D000C6F278 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				CD6FD1A92268B6E600C6F278 /* Constants.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		CDCB9D3B2260D4DA00F61BC7 /* Models */ = {
@@ -351,6 +362,7 @@
 				CD0F3242226236870066E1C7 /* RegistrationController.swift in Sources */,
 				CD5D94EC22663512009F36AF /* LoginViewModel.swift in Sources */,
 				CD1B8374225F7BB300747E50 /* HomeController.swift in Sources */,
+				CD6FD1AA2268B6E600C6F278 /* Constants.swift in Sources */,
 				CD1B8372225F7BB300747E50 /* AppDelegate.swift in Sources */,
 				CD0F3244226236A00066E1C7 /* CustomTextField.swift in Sources */,
 				CD5D94EA226634F3009F36AF /* LoginController.swift in Sources */,

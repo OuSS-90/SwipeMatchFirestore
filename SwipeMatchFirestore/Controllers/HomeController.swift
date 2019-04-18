@@ -18,6 +18,8 @@ class HomeController: UIViewController {
     
     var cardViewModels = [CardViewModel]()
     var lastDocument : DocumentSnapshot?
+    
+    fileprivate let hud = JGProgressHUD(style: .dark)
     fileprivate var user: User?
 
     override func viewDidLoad() {
@@ -66,7 +68,11 @@ class HomeController: UIViewController {
     }
     
     fileprivate func fetchCurrentUser() {
+        hud.textLabel.text = "Fetching Users"
+        hud.show(in: view)
+        
         cardsDeckView.subviews.forEach({$0.removeFromSuperview()})
+        
         UserService.shared.fetchCurrentUser { (result) in
             switch result {
             case .success(let user):
@@ -79,15 +85,14 @@ class HomeController: UIViewController {
     }
     
     fileprivate func fetchUsersFromFirestore() {
-        guard let minAge = user?.minSeekingAge, let maxAge = user?.maxSeekingAge else { return }
-        
-        let hud = JGProgressHUD(style: .dark)
-        hud.textLabel.text = "Fetching Users"
-        hud.show(in: view)
+        let minAge = user?.minSeekingAge ?? MIN_SEEKING_AGE
+        let maxAge = user?.maxSeekingAge ?? MAX_SEEKING_AGE
         
         //Firestore.firestore().collection("users").limit(to: 2).getDocuments { (snapshot, error) in
         Firestore.firestore().collection("users").whereField("age", isGreaterThanOrEqualTo: minAge).whereField("age", isLessThanOrEqualTo: maxAge).getDocuments { (snapshot, error) in
-            hud.dismiss()
+            
+            self.hud.dismiss()
+            
             if let err = error {
                 print("Failed to fetch users:", err)
                 return
@@ -107,13 +112,12 @@ class HomeController: UIViewController {
     fileprivate func fetchNextUsers() {
         guard let lastDocument = lastDocument else { return }
         
-        let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Fetching Users"
         hud.show(in: view)
         
         Firestore.firestore().collection("users").start(afterDocument: lastDocument).limit(to: 2).getDocuments { (snapshot, error) in
             
-            hud.dismiss()
+            self.hud.dismiss()
             
             if let err = error {
                 print("Failed to fetch users:", err)

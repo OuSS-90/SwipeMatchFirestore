@@ -22,7 +22,7 @@ class CardView: UIView {
             guard let cardViewModel = cardViewModel else { return }
             guard let imageUrl = cardViewModel.imageUrls.first else { return }
             guard let url = URL(string: imageUrl) else { return }
-            imageView.sd_setImage(with: url)
+            imageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "photo_placeholder"))
             informationLabel.attributedText = cardViewModel.attributedText
             (0..<cardViewModel.imageUrls.count).forEach { (_) in
                 let view = UIView()
@@ -136,7 +136,7 @@ class CardView: UIView {
     fileprivate func setupImageIndexObserver() {
         cardViewModel?.imageIndexObserver = { [weak self] (index, imageUrl) in
             if let imageUrl = imageUrl, let url = URL(string: imageUrl) {
-                self?.imageView.sd_setImage(with: url)
+                self?.imageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "photo_placeholder"))
             }
             self?.barsStackView.arrangedSubviews.forEach { (view) in
                 view.backgroundColor = self?.deseletedBarColor
