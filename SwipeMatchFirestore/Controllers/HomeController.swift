@@ -17,16 +17,17 @@ class HomeController: UIViewController {
     let bottomControls = HomeBottomStackView()
     
     var cardViewModels = [CardViewModel]()
-    var lastDocument : DocumentSnapshot?
     
     fileprivate let hud = JGProgressHUD(style: .dark)
     fileprivate var user: User?
+    fileprivate var topCardView: CardView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         topStackView.settingsButton.addTarget(self, action: #selector(handleSettings), for: .touchUpInside)
         bottomControls.refreshButton.addTarget(self, action: #selector(handleRefresh), for: .touchUpInside)
+        bottomControls.likeButton.addTarget(self, action: #selector(handleLike), for: .touchUpInside)
         
         setupLayout()
         fetchCurrentUser()
@@ -53,7 +54,20 @@ class HomeController: UIViewController {
     }
     
     @objc fileprivate func handleRefresh() {
-        fetchNextUsers()
+        fetchUsersFromFirestore()
+    }
+    
+    @objc fileprivate func handleLike() {
+        UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+            
+            self.topCardView?.frame = CGRect(x: 600, y: 0, width: self.topCardView!.frame.width, height: self.topCardView!.frame.height)
+            let angle = 15 * CGFloat.pi / 180
+            self.topCardView?.transform = CGAffineTransform(rotationAngle: angle)
+            
+        }) { (_) in
+            self.topCardView?.removeFromSuperview()
+            self.topCardView = self.topCardView?.nextCardView
+        }
     }
     
     fileprivate func setupLayout() {
@@ -98,44 +112,26 @@ class HomeController: UIViewController {
                 return
             }
             
+            var previousCardView: CardView?
+            
             snapshot?.documents.forEach({ (document) in
                 let userDictionary = document.data()
                 let user = User(dictionary: userDictionary)
+                
                 if user.uid != Auth.auth().currentUser?.uid {
-                    self.setupCardView(user: user)
-                    self.lastDocument = document
+                    let cardView = self.setupCardView(user: user)
+                    previousCardView?.nextCardView = cardView
+                    previousCardView = cardView
+                    
+                    if self.topCardView == nil {
+                        self.topCardView = cardView
+                    }
                 }
             })
         }
     }
     
-    fileprivate func fetchNextUsers() {
-        guard let lastDocument = lastDocument else { return }
-        
-        hud.textLabel.text = "Fetching Users"
-        hud.show(in: view)
-        
-        Firestore.firestore().collection("users").start(afterDocument: lastDocument).limit(to: 2).getDocuments { (snapshot, error) in
-            
-            self.hud.dismiss()
-            
-            if let err = error {
-                print("Failed to fetch users:", err)
-                return
-            }
-            
-            snapshot?.documents.forEach({ (document) in
-                let userDictionary = document.data()
-                let user = User(dictionary: userDictionary)
-                if user.uid != Auth.auth().currentUser?.uid {
-                    self.setupCardView(user: user)
-                    self.lastDocument = document
-                }
-            })
-        }
-    }
-    
-    fileprivate func setupCardView(user: User) {
+    fileprivate func setupCardView(user: User) -> CardView {
         let cardViewModel = CardViewModel(user: user)
         let cardView = CardView()
         cardView.cardViewModel = cardViewModel
@@ -143,6 +139,7 @@ class HomeController: UIViewController {
         cardsDeckView.addSubview(cardView)
         cardsDeckView.sendSubviewToBack(cardView)
         cardView.fillSuperview()
+        return cardView
     }
 }
 
@@ -160,6 +157,11 @@ extension HomeController: LoginControllerDelegate, SettingsControllerDelegate, C
         let userDetailsController = UserDetailsController()
         userDetailsController.cardViewModel = cardViewModel
         present(userDetailsController, animated: true)
+    }
+    
+    func didRemoveCard(cardView: CardView) {
+        self.topCardView?.removeFromSuperview()
+        self.topCardView = self.topCardView?.nextCardView
     }
 }
 

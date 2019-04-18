@@ -11,11 +11,13 @@ import SDWebImage
 
 protocol CardViewDelegate {
     func didTapMoreInfo(cardViewModel: CardViewModel?)
+    func didRemoveCard(cardView: CardView)
 }
 
 class CardView: UIView {
     
     var delegate: CardViewDelegate?
+    var nextCardView: CardView?
     
     var cardViewModel: CardViewModel? {
         didSet{
@@ -24,7 +26,7 @@ class CardView: UIView {
             swipingPhotosController.cardViewModel = cardViewModel
             informationLabel.attributedText = cardViewModel.attributedText
             
-            setupImageIndexObserver()
+            //setupImageIndexObserver()
         }
     }
     
@@ -58,8 +60,8 @@ class CardView: UIView {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
         addGestureRecognizer(panGesture)
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
-        addGestureRecognizer(tapGesture)
+        /*let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
+        addGestureRecognizer(tapGesture)*/
     }
     
     override func layoutSubviews() {
@@ -102,7 +104,7 @@ class CardView: UIView {
         }
     }
     
-    @objc func handleTapGesture(gesture: UITapGestureRecognizer) {
+    /*@objc func handleTapGesture(gesture: UITapGestureRecognizer) {
         let location = gesture.location(in: nil)
         let shouldAdvance = location.x > frame.width / 2
         if shouldAdvance {
@@ -110,18 +112,18 @@ class CardView: UIView {
         } else {
             cardViewModel?.backToPreviousPhoto()
         }
-    }
+    }*/
     
     @objc fileprivate func handleMoreInfo() {
         delegate?.didTapMoreInfo(cardViewModel: cardViewModel)
     }
     
-    fileprivate func setupImageIndexObserver() {
+    /*fileprivate func setupImageIndexObserver() {
         cardViewModel?.imageIndexObserver = { [weak self] (index, imageUrl) in
             
             
         }
-    }
+    }*/
     
     fileprivate func handleChanged(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: nil)
@@ -145,6 +147,7 @@ class CardView: UIView {
             self.transform = .identity
              if shouldDismissCard {
                 self.removeFromSuperview()
+                self.delegate?.didRemoveCard(cardView: self)
             }
         }
     }

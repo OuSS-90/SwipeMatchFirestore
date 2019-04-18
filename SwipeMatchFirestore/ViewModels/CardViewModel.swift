@@ -13,14 +13,14 @@ class CardViewModel {
     let imageUrls: [String]
     let textAlignment: NSTextAlignment
     
-    fileprivate var imageIndex = 0 {
+    /*fileprivate var imageIndex = 0 {
         didSet{
             let imageUrl = imageUrls[imageIndex]
             imageIndexObserver?(imageIndex, imageUrl)
         }
     }
     
-    var imageIndexObserver: ((Int, String?) -> ())?
+    var imageIndexObserver: ((Int, String?) -> ())?*/
     
     init(user: User, textAlignment: NSTextAlignment = .left) {
         let attributedText = NSMutableAttributedString(string: user.name ?? "", attributes: [.font : UIFont.systemFont(ofSize: 32, weight: .heavy)])
@@ -39,11 +39,11 @@ class CardViewModel {
         self.textAlignment = textAlignment
     }
     
-    func advanceToNextPhoto() {
+    /*func advanceToNextPhoto() {
         imageIndex = min(imageIndex + 1, imageUrls.count - 1)
     }
     
     func backToPreviousPhoto() {
         imageIndex = max(0, imageIndex - 1)
-    }
+    }*/
 }
