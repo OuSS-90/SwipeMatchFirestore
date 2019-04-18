@@ -162,9 +162,9 @@ class SettingsController: UITableViewController {
             cell.textField.addTarget(self, action: #selector(handleProfessionChange), for: .editingChanged)
         case 3:
             cell.textField.addTarget(self, action: #selector(handleAgeChange), for: .editingChanged)
-            if let age = user?.age {
-                cell.textField.text = String(age)
-            }
+            let age = user?.age ?? DEFAULT_AGE
+            cell.textField.text = String(age)
+            
         default:
             cell.textField.placeholder = "Enter Bio"
         }
@@ -223,10 +223,10 @@ class SettingsController: UITableViewController {
             "imageUrl1": user?.imageUrl1 ?? "",
             "imageUrl2": user?.imageUrl2 ?? "",
             "imageUrl3": user?.imageUrl3 ?? "",
-            "age": user?.age ?? -1,
+            "age": user?.age ?? DEFAULT_AGE,
             "profession": user?.profession ?? "",
-            "minSeekingAge": user?.minSeekingAge ?? -1,
-            "maxSeekingAge": user?.maxSeekingAge ?? -1
+            "minSeekingAge": user?.minSeekingAge ?? MIN_SEEKING_AGE,
+            "maxSeekingAge": user?.maxSeekingAge ?? MAX_SEEKING_AGE
         ]
         
         let hud = JGProgressHUD(style: .dark)

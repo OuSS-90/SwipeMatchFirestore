@@ -77,7 +77,7 @@ class RegistrationViewModel {
             "fullName": fullname ?? "",
             "uid": uid,
             "imageUrl1": imageUrl,
-            "age": 18,
+            "age": DEFAULT_AGE,
             "minSeekingAge": MIN_SEEKING_AGE,
             "maxSeekingAge": MAX_SEEKING_AGE
         ]

@@ -8,5 +8,6 @@
 
 import Foundation
 
+public let DEFAULT_AGE = 18
 public let MIN_SEEKING_AGE = 18
 public let MAX_SEEKING_AGE = 50
