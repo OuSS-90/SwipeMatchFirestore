@@ -20,25 +20,15 @@ class CardView: UIView {
     var cardViewModel: CardViewModel? {
         didSet{
             guard let cardViewModel = cardViewModel else { return }
-            guard let imageUrl = cardViewModel.imageUrls.first else { return }
-            guard let url = URL(string: imageUrl) else { return }
-            imageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "photo_placeholder"))
+            
+            swipingPhotosController.cardViewModel = cardViewModel
             informationLabel.attributedText = cardViewModel.attributedText
-            (0..<cardViewModel.imageUrls.count).forEach { (_) in
-                let view = UIView()
-                view.backgroundColor = deseletedBarColor
-                barsStackView.addArrangedSubview(view)
-            }
-            barsStackView.arrangedSubviews.first?.backgroundColor = .white
+            
             setupImageIndexObserver()
         }
     }
     
-    fileprivate let imageView: UIImageView = {
-        let imageV = UIImageView()
-        imageV.contentMode = .scaleAspectFill
-        return imageV
-    }()
+    let swipingPhotosController = SwipingPhotosController(isCardViewMode: true)
     
     fileprivate let informationLabel: UILabel = {
         let label = UILabel()
@@ -54,8 +44,6 @@ class CardView: UIView {
         return button
     }()
     
-    fileprivate let deseletedBarColor = UIColor(white: 0, alpha: 0.1)
-    fileprivate let barsStackView = UIStackView()
     fileprivate let gradientLayer = CAGradientLayer()
     
     //Configuration
@@ -82,23 +70,18 @@ class CardView: UIView {
         layer.cornerRadius = 10
         clipsToBounds = true
         
-        addSubview(imageView)
-        setupBarsStackView()
+        let swipingPhotosView = swipingPhotosController.view!
+        addSubview(swipingPhotosView)
+        
         setupGradientLayer()
+        
         addSubview(informationLabel)
         
-        imageView.fillSuperview()
+        swipingPhotosView.fillSuperview()
         informationLabel.anchor(top: nil, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: UIEdgeInsets(top: 0, left: 16, bottom: 16, right: 16))
         
         addSubview(moreInfoButton)
         moreInfoButton.anchor(top: nil, leading: nil, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 16, right: 16), size: .init(width: 44, height: 44))
-    }
-    
-    fileprivate func setupBarsStackView() {
-        addSubview(barsStackView)
-        barsStackView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: UIEdgeInsets(top: 8, left: 8, bottom: 0, right: 8), size: CGSize(width: 0, height: 4))
-        barsStackView.distribution = .fillEqually
-        barsStackView.spacing = 5
     }
     
     fileprivate func setupGradientLayer(){
@@ -135,13 +118,8 @@ class CardView: UIView {
     
     fileprivate func setupImageIndexObserver() {
         cardViewModel?.imageIndexObserver = { [weak self] (index, imageUrl) in
-            if let imageUrl = imageUrl, let url = URL(string: imageUrl) {
-                self?.imageView.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "photo_placeholder"))
-            }
-            self?.barsStackView.arrangedSubviews.forEach { (view) in
-                view.backgroundColor = self?.deseletedBarColor
-            }
-            self?.barsStackView.arrangedSubviews[index].backgroundColor = .white
+            
+            
         }
     }
     
