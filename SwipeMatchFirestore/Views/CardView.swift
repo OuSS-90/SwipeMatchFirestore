@@ -11,7 +11,7 @@ import SDWebImage
 
 protocol CardViewDelegate {
     func didTapMoreInfo(cardViewModel: CardViewModel?)
-    func didRemoveCard(cardView: CardView)
+    func didSwipe(didLike: Bool)
 }
 
 class CardView: UIView {
@@ -104,26 +104,9 @@ class CardView: UIView {
         }
     }
     
-    /*@objc func handleTapGesture(gesture: UITapGestureRecognizer) {
-        let location = gesture.location(in: nil)
-        let shouldAdvance = location.x > frame.width / 2
-        if shouldAdvance {
-            cardViewModel?.advanceToNextPhoto()
-        } else {
-            cardViewModel?.backToPreviousPhoto()
-        }
-    }*/
-    
     @objc fileprivate func handleMoreInfo() {
         delegate?.didTapMoreInfo(cardViewModel: cardViewModel)
     }
-    
-    /*fileprivate func setupImageIndexObserver() {
-        cardViewModel?.imageIndexObserver = { [weak self] (index, imageUrl) in
-            
-            
-        }
-    }*/
     
     fileprivate func handleChanged(_ gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: nil)
@@ -137,18 +120,13 @@ class CardView: UIView {
         let translationDirection: CGFloat = gesture.translation(in: nil).x > 0 ? 1 : -1
         let shouldDismissCard = abs(gesture.translation(in: nil).x) > threshold
         
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
-            if shouldDismissCard {
-                self.frame = CGRect(x: 800 * translationDirection, y: 0, width: self.frame.width, height: self.frame.height)
-            } else {
+        if shouldDismissCard {
+            let didLike = translationDirection == 1
+            delegate?.didSwipe(didLike: didLike)
+        } else {
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
                 self.transform = .identity
-            }
-        }) { (_) in
-            self.transform = .identity
-             if shouldDismissCard {
-                self.removeFromSuperview()
-                self.delegate?.didRemoveCard(cardView: self)
-            }
+            })
         }
     }
     

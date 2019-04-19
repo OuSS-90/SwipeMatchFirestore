@@ -9,20 +9,13 @@
 import UIKit
 
 class CardViewModel {
+    let uid: String?
     let attributedText: NSAttributedString
     let imageUrls: [String]
     let textAlignment: NSTextAlignment
     
-    /*fileprivate var imageIndex = 0 {
-        didSet{
-            let imageUrl = imageUrls[imageIndex]
-            imageIndexObserver?(imageIndex, imageUrl)
-        }
-    }
-    
-    var imageIndexObserver: ((Int, String?) -> ())?*/
-    
     init(user: User, textAlignment: NSTextAlignment = .left) {
+        self.uid = user.uid
         let attributedText = NSMutableAttributedString(string: user.name ?? "", attributes: [.font : UIFont.systemFont(ofSize: 32, weight: .heavy)])
         let ageString = user.age != nil ? "\(user.age!)" : "N\\A"
         attributedText.append(NSAttributedString(string: " \(ageString)", attributes: [.font : UIFont.systemFont(ofSize: 24, weight: .regular)]))
@@ -38,12 +31,4 @@ class CardViewModel {
         self.imageUrls = imageUrls
         self.textAlignment = textAlignment
     }
-    
-    /*func advanceToNextPhoto() {
-        imageIndex = min(imageIndex + 1, imageUrls.count - 1)
-    }
-    
-    func backToPreviousPhoto() {
-        imageIndex = max(0, imageIndex - 1)
-    }*/
 }

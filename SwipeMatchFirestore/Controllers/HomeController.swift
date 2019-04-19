@@ -59,10 +59,12 @@ class HomeController: UIViewController {
     }
     
     @objc fileprivate func handleLike() {
+        saveSwipeToFirestore(didLike: 1)
         performSwipeAnimation(translation: 700, angle: 15)
     }
     
     @objc fileprivate func handleDislike() {
+        saveSwipeToFirestore(didLike: 0)
         performSwipeAnimation(translation: -700, angle: -15)
     }
     
@@ -165,9 +167,41 @@ class HomeController: UIViewController {
         cardView.fillSuperview()
         return cardView
     }
+    
+    fileprivate func saveSwipeToFirestore(didLike: Int) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        guard let cardUID = topCardView?.cardViewModel?.uid else { return }
+        
+        let documentData = [cardUID: didLike]
+        
+        Firestore.firestore().collection("swipes").document(uid).getDocument { (snapshot, err) in
+            if let err = err {
+                print("Failed to fetch swipe document:", err)
+                return
+            }
+            
+            if snapshot?.exists == true {
+                Firestore.firestore().collection("swipes").document(uid).updateData(documentData) { (err) in
+                    if let err = err {
+                        print("Failed to save swipe data:", err)
+                        return
+                    }
+                }
+            } else {
+                Firestore.firestore().collection("swipes").document(uid).setData(documentData) { (err) in
+                    if let err = err {
+                        print("Failed to save swipe data:", err)
+                        return
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension HomeController: LoginControllerDelegate, SettingsControllerDelegate, CardViewDelegate {
+    
     
     func didFinishLoggingIn() {
         fetchCurrentUser()
@@ -183,9 +217,12 @@ extension HomeController: LoginControllerDelegate, SettingsControllerDelegate, C
         present(userDetailsController, animated: true)
     }
     
-    func didRemoveCard(cardView: CardView) {
-        self.topCardView?.removeFromSuperview()
-        self.topCardView = self.topCardView?.nextCardView
+    func didSwipe(didLike: Bool) {
+        if didLike {
+            handleLike()
+        } else {
+            handleDislike()
+        }
     }
 }
 
