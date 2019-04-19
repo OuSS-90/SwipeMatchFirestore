@@ -25,8 +25,6 @@ class CardView: UIView {
             
             swipingPhotosController.cardViewModel = cardViewModel
             informationLabel.attributedText = cardViewModel.attributedText
-            
-            //setupImageIndexObserver()
         }
     }
     
