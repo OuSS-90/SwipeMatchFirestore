@@ -164,7 +164,8 @@ class HomeController: UIViewController {
                 guard let uid = user.uid else { return }
                 
                 let isNotCurrentUser = uid != Auth.auth().currentUser?.uid
-                let hasNotSwipedBefore = self.swipes[uid] == nil
+                //let hasNotSwipedBefore = self.swipes[uid] == nil
+                let hasNotSwipedBefore = true
                 
                 if isNotCurrentUser && hasNotSwipedBefore  {
                     let cardView = self.setupCardView(user: user)
@@ -247,6 +248,8 @@ class HomeController: UIViewController {
     
     fileprivate func presentMatchView(cardUID: String) {
         let matchView = MatchView()
+        matchView.cardUID = cardUID
+        matchView.currentUser = user
         view.addSubview(matchView)
         matchView.fillSuperview()
     }
