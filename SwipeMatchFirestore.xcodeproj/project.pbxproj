@@ -3,13 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		53AFD9360A86FEC7A9D544D4 /* Pods_SwipeMatchFirestore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7425490BDD13534E30082932 /* Pods_SwipeMatchFirestore.framework */; };
 		CD0F3242226236870066E1C7 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0F3241226236870066E1C7 /* RegistrationController.swift */; };
 		CD0F3244226236A00066E1C7 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0F3243226236A00066E1C7 /* CustomTextField.swift */; };
+		CD128DAF229ED3A400E848D0 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD128DAE229ED3A400E848D0 /* MessagesController.swift */; };
 		CD1B8372225F7BB300747E50 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1B8371225F7BB300747E50 /* AppDelegate.swift */; };
 		CD1B8374225F7BB300747E50 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1B8373225F7BB300747E50 /* HomeController.swift */; };
 		CD1B8377225F7BB300747E50 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD1B8375225F7BB300747E50 /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 		7425490BDD13534E30082932 /* Pods_SwipeMatchFirestore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwipeMatchFirestore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD0F3241226236870066E1C7 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		CD0F3243226236A00066E1C7 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		CD128DAE229ED3A400E848D0 /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
 		CD1B836E225F7BB300747E50 /* SwipeMatchFirestore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwipeMatchFirestore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD1B8371225F7BB300747E50 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CD1B8373225F7BB300747E50 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -103,6 +105,14 @@
 				42A73163218AAA533E0F106F /* Pods-SwipeMatchFirestore.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		CD128DAD229ED39300E848D0 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				CD128DAE229ED3A400E848D0 /* MessagesController.swift */,
+			);
+			path = Messages;
 			sourceTree = "<group>";
 		};
 		CD1B8365225F7BB300747E50 = {
@@ -202,6 +212,7 @@
 		CDCB9D3E2260E86500F61BC7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CD128DAD229ED39300E848D0 /* Messages */,
 				CDD47E832267669500C4B488 /* User Details */,
 				CD5D94E8226634AD009F36AF /* Login */,
 				CD1B8373225F7BB300747E50 /* HomeController.swift */,
@@ -307,35 +318,16 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SwipeMatchFirestore/Pods-SwipeMatchFirestore-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/JGProgressHUD/JGProgressHUD.framework",
-				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwipeMatchFirestore/Pods-SwipeMatchFirestore-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JGProgressHUD.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwipeMatchFirestore/Pods-SwipeMatchFirestore-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwipeMatchFirestore/Pods-SwipeMatchFirestore-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwipeMatchFirestore/Pods-SwipeMatchFirestore-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		76D6E66D44C41DC1B67FB5B3 /* [CP] Check Pods Manifest.lock */ = {
@@ -366,6 +358,7 @@
 				CDD47E85226766AD00C4B488 /* UserDetailsController.swift in Sources */,
 				CD5D94E2226624E1009F36AF /* AgeRangeCell.swift in Sources */,
 				CD3448A42264E44A007A8CC7 /* SettingsCell.swift in Sources */,
+				CD128DAF229ED3A400E848D0 /* MessagesController.swift in Sources */,
 				CD1B838A225F7E4600747E50 /* HomeBottomStackView.swift in Sources */,
 				CD3448A22264DD0E007A8CC7 /* SettingsController.swift in Sources */,
 				CDCE00B122636C95001C50BF /* RegistrationViewModel.swift in Sources */,

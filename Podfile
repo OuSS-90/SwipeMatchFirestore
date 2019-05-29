@@ -12,5 +12,6 @@ target 'SwipeMatchFirestore' do
   pod 'Firebase/Core’
   pod 'SDWebImage'
   pod 'JGProgressHUD'
+  pod 'LBTATools'
 
 end
