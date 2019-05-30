@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 struct User {
     var uid: String?
@@ -18,6 +19,26 @@ struct User {
     var imageUrl3: String?
     var minSeekingAge: Int?
     var maxSeekingAge: Int?
+    
+    var dictionary: [String: Any] {
+        var dic: [String: Any] = [
+            "timestamp": Timestamp(date: Date())
+        ]
+        
+        if let uid = uid {
+            dic["uid"] = uid
+        }
+        
+        if let name = name {
+            dic["name"] = name
+        }
+        
+        if let profileImageUrl = imageUrl1 {
+            dic["profileImageUrl"] = profileImageUrl
+        }
+        
+        return dic
+    }
     
     init(dictionary: [String: Any]) {
         // we'll initialize our user here
