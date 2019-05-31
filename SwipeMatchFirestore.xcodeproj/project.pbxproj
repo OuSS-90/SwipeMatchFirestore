@@ -41,6 +41,8 @@
 		CDD47E892267944600C4B488 /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD47E882267944600C4B488 /* SwipingPhotosController.swift */; };
 		CDE92EBA22A172E2005E3387 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE92EB922A172E2005E3387 /* ChatLogController.swift */; };
 		CDE92EBD22A17302005E3387 /* MessagesNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE92EBC22A17302005E3387 /* MessagesNavBar.swift */; };
+		CDE92EBF22A17C55005E3387 /* MessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE92EBE22A17C55005E3387 /* MessageCell.swift */; };
+		CDE92EC122A17C81005E3387 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE92EC022A17C81005E3387 /* Message.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +84,8 @@
 		CDD47E882267944600C4B488 /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
 		CDE92EB922A172E2005E3387 /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 		CDE92EBC22A17302005E3387 /* MessagesNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesNavBar.swift; sourceTree = "<group>"; };
+		CDE92EBE22A17C55005E3387 /* MessageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageCell.swift; sourceTree = "<group>"; };
+		CDE92EC022A17C81005E3387 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				CDCB9D3C2260D4EB00F61BC7 /* User.swift */,
+				CDE92EC022A17C81005E3387 /* Message.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -256,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				CDE92EBC22A17302005E3387 /* MessagesNavBar.swift */,
+				CDE92EBE22A17C55005E3387 /* MessageCell.swift */,
 			);
 			path = MatchesMessages;
 			sourceTree = "<group>";
@@ -383,6 +389,7 @@
 				CD5D94E722662BE3009F36AF /* UserService.swift in Sources */,
 				CDA68B58226B9D7E0074CBAB /* KeepSwipingButton.swift in Sources */,
 				CDA68B54226B976A0074CBAB /* MatchView.swift in Sources */,
+				CDE92EBF22A17C55005E3387 /* MessageCell.swift in Sources */,
 				CD0F3242226236870066E1C7 /* RegistrationController.swift in Sources */,
 				CD5D94EC22663512009F36AF /* LoginViewModel.swift in Sources */,
 				CD1B8374225F7BB300747E50 /* HomeController.swift in Sources */,
@@ -391,6 +398,7 @@
 				CD1B8372225F7BB300747E50 /* AppDelegate.swift in Sources */,
 				CD0F3244226236A00066E1C7 /* CustomTextField.swift in Sources */,
 				CD5D94EA226634F3009F36AF /* LoginController.swift in Sources */,
+				CDE92EC122A17C81005E3387 /* Message.swift in Sources */,
 				CD1B8386225F7C0800747E50 /* UIView+Additions.swift in Sources */,
 				CD6FD1AC2268C01400C6F278 /* PhotoController.swift in Sources */,
 				CDCB9D412260E8E900F61BC7 /* CardViewModel.swift in Sources */,
