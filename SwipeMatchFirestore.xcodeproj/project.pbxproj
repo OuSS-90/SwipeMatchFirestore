@@ -39,6 +39,8 @@
 		CDCE00B522638365001C50BF /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDCE00B422638365001C50BF /* Bindable.swift */; };
 		CDD47E85226766AD00C4B488 /* UserDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD47E84226766AD00C4B488 /* UserDetailsController.swift */; };
 		CDD47E892267944600C4B488 /* SwipingPhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDD47E882267944600C4B488 /* SwipingPhotosController.swift */; };
+		CDE92EBA22A172E2005E3387 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE92EB922A172E2005E3387 /* ChatLogController.swift */; };
+		CDE92EBD22A17302005E3387 /* MessagesNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE92EBC22A17302005E3387 /* MessagesNavBar.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +80,8 @@
 		CDCE00B422638365001C50BF /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		CDD47E84226766AD00C4B488 /* UserDetailsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsController.swift; sourceTree = "<group>"; };
 		CDD47E882267944600C4B488 /* SwipingPhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingPhotosController.swift; sourceTree = "<group>"; };
+		CDE92EB922A172E2005E3387 /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
+		CDE92EBC22A17302005E3387 /* MessagesNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesNavBar.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,12 +113,13 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		CD128DAD229ED39300E848D0 /* Messages */ = {
+		CD128DAD229ED39300E848D0 /* MatchesMessages */ = {
 			isa = PBXGroup;
 			children = (
 				CD128DAE229ED3A400E848D0 /* MatchesMessagesController.swift */,
+				CDE92EB922A172E2005E3387 /* ChatLogController.swift */,
 			);
-			path = Messages;
+			path = MatchesMessages;
 			sourceTree = "<group>";
 		};
 		CD1B8365225F7BB300747E50 = {
@@ -158,6 +163,7 @@
 		CD1B8383225F7BC300747E50 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CDE92EBB22A172F0005E3387 /* MatchesMessages */,
 				CD1B8387225F7C9200747E50 /* TopNavigationStackView.swift */,
 				CD1B8389225F7E4600747E50 /* HomeBottomStackView.swift */,
 				CD1B838B225F87F700747E50 /* CardView.swift */,
@@ -215,7 +221,7 @@
 		CDCB9D3E2260E86500F61BC7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				CD128DAD229ED39300E848D0 /* Messages */,
+				CD128DAD229ED39300E848D0 /* MatchesMessages */,
 				CDD47E832267669500C4B488 /* User Details */,
 				CD5D94E8226634AD009F36AF /* Login */,
 				CD1B8373225F7BB300747E50 /* HomeController.swift */,
@@ -244,6 +250,14 @@
 				CD6FD1AB2268C01400C6F278 /* PhotoController.swift */,
 			);
 			path = "User Details";
+			sourceTree = "<group>";
+		};
+		CDE92EBB22A172F0005E3387 /* MatchesMessages */ = {
+			isa = PBXGroup;
+			children = (
+				CDE92EBC22A17302005E3387 /* MessagesNavBar.swift */,
+			);
+			path = MatchesMessages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -382,8 +396,10 @@
 				CDCB9D412260E8E900F61BC7 /* CardViewModel.swift in Sources */,
 				CD1B838C225F87F700747E50 /* CardView.swift in Sources */,
 				CD1B8388225F7C9200747E50 /* TopNavigationStackView.swift in Sources */,
+				CDE92EBA22A172E2005E3387 /* ChatLogController.swift in Sources */,
 				CDA68B56226B9D640074CBAB /* SendMessageButton.swift in Sources */,
 				CDD47E892267944600C4B488 /* SwipingPhotosController.swift in Sources */,
+				CDE92EBD22A17302005E3387 /* MessagesNavBar.swift in Sources */,
 				CDCB9D3D2260D4EB00F61BC7 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
